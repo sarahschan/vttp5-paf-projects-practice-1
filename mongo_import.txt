@@ -1,0 +1,1 @@
+mongoimport --host=localhost --port=27017 --db=listings --collection=listings --type=json  --file=listings.json
