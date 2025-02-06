@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page</title>
+</head>
+<body>
+    
+    <h1>Search Our Accomodations</h1>
+
+    <form method="GET" action="/search" th:object="${form}">
+        
+        <label>Country:</label>
+        <select th:field="*{country}">
+            <option value="" selected disabled>Select A country</option>
+            <option th:each="country: ${countries}"
+                    th:value="${country}"
+                    th:text="${country}"></option>
+        </select>
+        <div th:if="${#fields.hasErrors('country')}" style="color: red; font-size: 12px; margin-left: 60px;">
+            <span th:errors="*{country}"></span>
+        </div>
+
+        <br><br>
+
+        <label>Number of person:</label>
+        <input th:field="*{pax}" type="number" >
+        <div th:if="${#fields.hasErrors('pax')}" style="color: red; font-size: 12px; margin-left: 125px;">
+            <span th:errors="*{pax}"></span>
+        </div>
+
+        <br><br>
+
+        <label>Price Range:</label>
+        &nbsp;
+        Min <input th:field="*{minPrice}" type="number" step="any">
+        &nbsp;
+        Max <input th:field="*{maxPrice}" type="number" step="any">
+        <div th:if="${#fields.hasErrors('minPrice')}" style="color: red; font-size: 12px; margin-left: 95px;">
+            <span th:errors="*{minPrice}"></span>
+        </div>
+        <div th:if="${#fields.hasErrors('maxPrice')}" style="color: red; font-size: 12px; margin-left: 95px;">
+            <span th:errors="*{maxPrice}"></span>
+        </div>
+        <div th:if="${invalidMaxPrice}" style="color: red; font-size: 12px; margin-left: 95px;">
+            <span th:text="${invalidMaxPrice}"></span>
+        </div>
+
+        <br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
