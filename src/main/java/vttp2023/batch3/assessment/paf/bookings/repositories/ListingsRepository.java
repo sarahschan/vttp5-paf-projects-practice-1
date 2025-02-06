@@ -71,7 +71,9 @@ public class ListingsRepository {
 
 
 
-	//TODO: Task 4
+	public List<Document> getListingDetails(String id){
+		return null;
+	}
 	
 
 	//TODO: Task 5

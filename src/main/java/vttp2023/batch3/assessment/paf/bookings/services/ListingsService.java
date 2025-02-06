@@ -34,8 +34,7 @@ public class ListingsService {
 				listing.setName(d.getString("name"));
 				listing.setPrice(d.getDouble("price"));
 				listing.setPictureUrl(d.getString("picture_url"));
-
-			System.out.println(listing);
+				
 			listings.add(listing);
 		}
 

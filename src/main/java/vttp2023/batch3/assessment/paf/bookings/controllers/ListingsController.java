@@ -64,6 +64,8 @@ public class ListingsController {
 
 	@GetMapping("/listing/{id}")
 	public String listingDetails(@PathVariable String id){
+
+		
 		return "listingDetails";
 	}
 

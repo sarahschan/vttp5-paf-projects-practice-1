@@ -9,22 +9,29 @@
     
     <h1>Listings for <span th:text="${country}"></span></h1>
 
-    <table border="1" align="left">
+    <div th:if="${#lists.isEmpty(listings)}">
+        <p>There are no listings that match your search</p>
+    </div>
 
-        <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Image</th>
-            <th></th>
-        </tr>
+    <div th:if="${not #lists.isEmpty(listings)}">
+        <table border="1" align="left">
 
-        <tr th:each="listing : ${listings}">
-            <td th:text="${listing.name}"></td>
-            <td th:text="${listing.price}"></td>
-            <td><img th:src="${listing.pictureUrl}" alt="Listing Image" style="width: 100px; height: auto;" /></td>
-            <td><a th:href="@{/listing/{id}(id=${listing.id})}">Details</a></td>
-        </tr>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Image</th>
+                <th></th>
+            </tr>
+    
+            <tr th:each="listing : ${listings}">
+                <td th:text="${listing.name}"></td>
+                <td th:text="${listing.price}"></td>
+                <td><img th:src="${listing.pictureUrl}" alt="Listing Image" style="width: 100px; height: auto;" /></td>
+                <td><a th:href="@{/listing/{id}(id=${listing.id})}">Details</a></td>
+            </tr>
+    
+        </table>
+    </div>
 
-    </table>
 </body>
 </html>
