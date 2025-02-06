@@ -1,10 +1,9 @@
 package vttp2023.batch3.assessment.paf.bookings.models;
 
 import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-
 
 public class Form {
     
@@ -12,18 +11,21 @@ public class Form {
     private String country;
 
         @NotNull(message = "Please enter number of person(s)")
-        @Min(value = 1, message = "Booking must be for at least 1 pax")
+        @Min(value = 1, message = "Booking must be for a minimum of 1 pax")
+        @Max(value = 10, message = "Booking must be for a maximum of 10 pax")
         @Digits(integer = 2, fraction = 0, message = "Hours must be a whole number")
     private int pax;
 
         @NotNull(message = "Please enter a minimum price per night")
-        @Min(value = 0, message = "Minimum price cannot be negative")
-        @Digits(integer = 10, fraction = 2, message = "Minimum price must be a number with a maximum of 2 decimal places")
+        @Min(value = 1, message = "Minimum price is $1")
+        @Max(value = 10000, message = "Maximum price is $10000")
+        @Digits(integer = 5, fraction = 2, message = "Minimum price must be a number with a maximum of 2 decimal places")
     private double minPrice;
 
         @NotNull(message = "Please enter a maximum price per night")
-        @Positive(message = "Amount must be a positive number")
-        @Digits(integer = 10, fraction = 2, message = "Minimum price must be a number with a maximum of 2 decimal places")
+        @Min(value = 1, message = "Minimum price is $1")
+        @Max(value = 10000, message = "Maximum price is $10000")
+        @Digits(integer = 5, fraction = 2, message = "Maximum price must be a number with a maximum of 2 decimal places")
     private double maxPrice;
 
 
