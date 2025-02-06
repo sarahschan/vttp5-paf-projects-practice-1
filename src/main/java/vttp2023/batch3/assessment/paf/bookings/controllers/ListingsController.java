@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.validation.Valid;
 import vttp2023.batch3.assessment.paf.bookings.models.Form;
 import vttp2023.batch3.assessment.paf.bookings.models.Listing;
+import vttp2023.batch3.assessment.paf.bookings.models.ListingDetails;
 import vttp2023.batch3.assessment.paf.bookings.services.ListingsService;
 
 @Controller
@@ -63,9 +64,12 @@ public class ListingsController {
 
 
 	@GetMapping("/listing/{id}")
-	public String listingDetails(@PathVariable String id){
+	public String listingDetails(@PathVariable String id, Model model){
 
-		
+		ListingDetails listingDetails = listingsService.getListingDetails(id);
+
+		model.addAttribute("listingDetails", listingDetails);
+
 		return "listingDetails";
 	}
 

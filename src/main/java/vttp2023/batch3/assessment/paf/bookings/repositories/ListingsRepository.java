@@ -71,8 +71,36 @@ public class ListingsRepository {
 
 
 
-	public List<Document> getListingDetails(String id){
-		return null;
+	// db.listings.aggregate([
+    // {    $match: {
+    //           "_id": "13591144"
+    //       }
+    // },
+    // {
+    //     $project: {
+    //         "_id": 1,
+    //         "description": 1,
+    //         "address_street": "$address.street",
+    //         "address_suburb": "$address.suburb",
+    //         "address_country": "$address.country",
+    //         "picture_url": "$images.picture_url",
+    //         "price": 1,
+    //         "amenities": 1
+    //     }
+    // }
+	// ])
+	public Document getListingDetails(String id){
+
+		Criteria criteria = Criteria.where("_id").is(id);
+
+		MatchOperation matchCriteria = Aggregation.match(criteria);
+
+		ProjectionOperation projectFields = Aggregation
+			.project("description", "address.street", "address.suburb", "address.country", "images.picture_url", "price", "amenities");
+
+		Aggregation pipeline = Aggregation.newAggregation(matchCriteria, projectFields);
+		
+		return mongoTemplate.aggregate(pipeline, "listings", Document.class).getUniqueMappedResult();
 	}
 	
 

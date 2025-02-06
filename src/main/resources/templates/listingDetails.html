@@ -7,5 +7,40 @@
 </head>
 <body>
     
+    <h1>Listing Details</h1>
+
+    <table border="1" align="left">
+
+        <tr>
+            <th>ID</th>
+            <td th:text="${listingDetails.id}"></td>
+        </tr>
+
+        <tr>
+            <th>Description</th>
+            <td th:text="${listingDetails.description}"></td>
+        </tr>
+
+        <tr>
+            <th>Address</th>
+            <td>
+                <span th:text="${listingDetails.street}"></span><br>
+                <span th:text="${listingDetails.suburb}"></span><br>
+                <span th:text="${listingDetails.country}"></span><br>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Price</th>
+            <td th:text="${listingDetails.price}"></td>
+        </tr>
+
+        <tr>
+            <th>Amenities</th>
+            <td th:text="${listingDetails.amenities}"></td>
+        </tr>
+
+    </table>
+
 </body>
 </html>
