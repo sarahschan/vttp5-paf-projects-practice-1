@@ -56,33 +56,47 @@
     <div>
         <h1>Bookings</h1>
 
-        <form>
+        <form method="POST" th:action="@{'/' + ${listingDetails.id} + '/book'}" th:object="${bookingForm}">
             <table>
                 <tr>
                     <td>Name: </td>
                     <td>
-                        <input type="text" name="name">
+                        <input type="text" th:field="${bookingForm.name}">
+                    </td>
+                    <td th:if="${#fields.hasErrors('name')}" style="color: red; font-size: 12px;">
+                        <span th:errors="*{name}"></span>
                     </td>
                 </tr>
                 <tr>
                     <td>Email: </td>
                     <td>
-                        <input type="text" name="email">
+                        <input type="text" th:field="${bookingForm.email}">
+                    </td>
+                    <td th:if="${#fields.hasErrors('email')}" style="color: red; font-size: 12px;">
+                        <span th:errors="*{email}"></span>
                     </td>
                 </tr>
                 <tr>
                     <td>Arrival: </td>
                     <td>
-                        <input type="date" name="arrival" min="0000-01-01" max="9999-12-31">
+                        <input type="date" th:field="${bookingForm.arrival}" min="0000-01-01" max="9999-12-31">
+                    </td>
+                    <td th:if="${#fields.hasErrors('arrival')}" style="color: red; font-size: 12px;">
+                        <span th:errors="*{arrival}"></span>
                     </td>
                 </tr>
                 <tr>
                     <td>Stay: </td>
                     <td>
-                        <input type="text" name="stay">
+                        <input type="number" th:field="${bookingForm.stay}">
+                    </td>
+                    <td th:if="${#fields.hasErrors('stay')}" style="color: red; font-size: 12px;">
+                        <span th:errors="*{stay}"></span>
                     </td>
                 </tr>
             </table>
+
+            <button type="submit">Book</button>
         </form>
     </div>
 
