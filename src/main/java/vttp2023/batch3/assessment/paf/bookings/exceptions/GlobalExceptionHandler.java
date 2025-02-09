@@ -10,10 +10,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 @ControllerAdvice
 public class GlobalExceptionHandler {
     
-    @ExceptionHandler({ListingNotAvailableException.class})
-    public String handleListingNotAvailable(ListingNotAvailableException ex, Model model, HttpSession session) {
+    @ExceptionHandler({RuntimeException.class})
+    public String handleListingNotAvailable(RuntimeException ex, Model model, HttpSession session) {
 
-        System.out.println(ex.getMessage());
         model.addAttribute("message", ex.getMessage());
         model.addAttribute("country", session.getAttribute("country"));
 		model.addAttribute("pax", session.getAttribute("pax"));
@@ -22,4 +21,5 @@ public class GlobalExceptionHandler {
         return "error";
 
     }
+
 }

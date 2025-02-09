@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
-public class SearchForm {
+public class Form {
     
         @NotNull(message = "Please select a country")
     private String country;
@@ -30,10 +30,10 @@ public class SearchForm {
 
 
 
-    public SearchForm() {
+    public Form() {
     }
 
-    public SearchForm(String country, int pax, double minPrice, double maxPrice) {
+    public Form(String country, int pax, double minPrice, double maxPrice) {
         this.country = country;
         this.pax = pax;
         this.minPrice = minPrice;

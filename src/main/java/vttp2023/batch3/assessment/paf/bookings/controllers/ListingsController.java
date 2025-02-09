@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import vttp2023.batch3.assessment.paf.bookings.models.SearchForm;
+import vttp2023.batch3.assessment.paf.bookings.models.Form;
+import vttp2023.batch3.assessment.paf.bookings.exceptions.ListingNotFoundException;
 import vttp2023.batch3.assessment.paf.bookings.exceptions.UnableToProcessBookingException;
 import vttp2023.batch3.assessment.paf.bookings.models.BookingForm;
 import vttp2023.batch3.assessment.paf.bookings.models.Listing;
@@ -33,21 +34,23 @@ public class ListingsController {
 	@Autowired
 	BookingService bookingService;
 
+	
 	@GetMapping("")
 	public String landingPage(Model model){
 		
 		List<String> countries = listingsService.getCountries();
-		SearchForm form = new SearchForm();
+		Form form = new Form();
 			form.setCountry("");
 
-		model.addAttribute("form", form);
 		model.addAttribute("countries", countries);
-		
+		model.addAttribute("form", form);
+
 		return "landingPage";
 	}
 	
+	
 	@GetMapping("/search")
-	public String search(@Valid @ModelAttribute SearchForm form, BindingResult result, Model model, HttpSession session){
+	public String search(@Valid @ModelAttribute Form form, BindingResult result, Model model, HttpSession session){
 		
 		if (result.hasErrors() || (form.getMinPrice() > form.getMaxPrice())){
 
@@ -57,7 +60,7 @@ public class ListingsController {
 
 			List<String> countries = listingsService.getCountries();
 			model.addAttribute("countries", countries);
-			model.addAttribute("searchForm", form);
+			model.addAttribute("form", form);
 
 			return "landingPage";
 		}
@@ -82,12 +85,7 @@ public class ListingsController {
 		Optional<ListingDetails> opt = listingsService.getListingDetails(id);
 
 		if (opt.isEmpty()){
-			model.addAttribute("listingId", id);
-			model.addAttribute("country", session.getAttribute("country"));
-			model.addAttribute("pax", session.getAttribute("pax"));
-			model.addAttribute("minPrice", session.getAttribute("minPrice"));
-			model.addAttribute("maxPrice", session.getAttribute("maxPrice"));
-			return "listingNotFound";
+			throw new ListingNotFoundException(String.format("Listing %s not found", id));
 		}
 
 		BookingForm bookingForm = new BookingForm();
