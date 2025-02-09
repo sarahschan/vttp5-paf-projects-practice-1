@@ -6,41 +6,85 @@
     <title>Listing Details</title>
 </head>
 <body>
+
+    <div>
+        <a th:href="@{'/search?country=' + ${country} + '&pax=' + ${pax} + '&minPrice=' + ${minPrice} + '&maxPrice=' + ${maxPrice}}">Back to Search Results</a>
+    </div>
+
+    <div>
+
+        <h1>Listing Details</h1>
+
+        <table border="1">
     
-    <h1>Listing Details</h1>
+            <tr>
+                <th>ID</th>
+                <td colspan=2 th:text="${listingDetails.id}"></td>
+            </tr>
+    
+            <tr>
+                <th>Description</th>
+                <td th:text="${listingDetails.description}"></td>
+                <td><img th:src="${listingDetails.pictureUrl}" alt="Listing Image"/></td>
+            </tr>
+    
+            <tr>
+                <th>Address</th>
+                <td colspan=2>
+                    <span th:text="${listingDetails.street}"></span><br>
+                    <span th:text="${listingDetails.suburb}"></span><br>
+                    <span th:text="${listingDetails.country}"></span><br>
+                </td>
+            </tr>
+    
+            <tr>
+                <th>Price</th>
+                <td colspan=2 th:text="${listingDetails.price}"></td>
+            </tr>
+    
+            <tr>
+                <th>Amenities</th>
+                <td colspan=2 th:text="${listingDetails.amenities}"></td>
+            </tr>
+    
+        </table>
 
-    <table border="1" align="left">
+    </div>
+    
+    <br><br>
 
-        <tr>
-            <th>ID</th>
-            <td th:text="${listingDetails.id}"></td>
-        </tr>
+    <div>
+        <h1>Bookings</h1>
 
-        <tr>
-            <th>Description</th>
-            <td th:text="${listingDetails.description}"></td>
-        </tr>
-
-        <tr>
-            <th>Address</th>
-            <td>
-                <span th:text="${listingDetails.street}"></span><br>
-                <span th:text="${listingDetails.suburb}"></span><br>
-                <span th:text="${listingDetails.country}"></span><br>
-            </td>
-        </tr>
-
-        <tr>
-            <th>Price</th>
-            <td th:text="${listingDetails.price}"></td>
-        </tr>
-
-        <tr>
-            <th>Amenities</th>
-            <td th:text="${listingDetails.amenities}"></td>
-        </tr>
-
-    </table>
+        <form>
+            <table>
+                <tr>
+                    <td>Name: </td>
+                    <td>
+                        <input type="text" name="name">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Email: </td>
+                    <td>
+                        <input type="text" name="email">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Arrival: </td>
+                    <td>
+                        <input type="date" name="arrival" min="0000-01-01" max="9999-12-31">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Stay: </td>
+                    <td>
+                        <input type="text" name="stay">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
 
 </body>
 </html>

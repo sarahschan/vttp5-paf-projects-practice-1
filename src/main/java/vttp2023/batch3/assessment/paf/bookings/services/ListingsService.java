@@ -1,7 +1,9 @@
 package vttp2023.batch3.assessment.paf.bookings.services;
 
+import java.lang.classfile.ClassFile.Option;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +45,13 @@ public class ListingsService {
 	}
 
 
-	public ListingDetails getListingDetails(String id){
+	public Optional<ListingDetails> getListingDetails(String id){
 
 		Document d = listingsRepo.getListingDetails(id);
+
+		if (d == null){
+			return Optional.empty();
+		}
 
 		String amenitiesString = "-";
 
@@ -69,7 +75,7 @@ public class ListingsService {
 			listingDetails.setPictureUrl(d.getString("picture_url"));
 			listingDetails.setAmenities(amenitiesString);
 
-		return listingDetails;
+		return Optional.of(listingDetails);
 	}
 	
 

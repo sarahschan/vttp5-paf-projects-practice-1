@@ -7,14 +7,16 @@
 </head>
 <body>
     
-    <h1>Listings for <span th:text="${country}"></span></h1>
+    <div>
+        <h1>Listings for <span th:text="${country}"></span></h1>
+    </div>
 
     <div th:if="${#lists.isEmpty(listings)}">
         <p>There are no listings that match your search</p>
     </div>
 
     <div th:if="${not #lists.isEmpty(listings)}">
-        <table border="1" align="left">
+        <table border="1">
 
             <tr>
                 <th>Name</th>
@@ -31,6 +33,12 @@
             </tr>
     
         </table>
+    </div>
+
+    <br>
+
+    <div>
+        <a th:href="@{/search}">Back To Search Page</a>
     </div>
 
 </body>

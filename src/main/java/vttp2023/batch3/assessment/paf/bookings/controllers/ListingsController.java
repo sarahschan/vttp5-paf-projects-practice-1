@@ -1,8 +1,8 @@
 package vttp2023.batch3.assessment.paf.bookings.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
-import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import vttp2023.batch3.assessment.paf.bookings.models.Form;
 import vttp2023.batch3.assessment.paf.bookings.models.Listing;
@@ -40,7 +41,7 @@ public class ListingsController {
 	}
 	
 	@GetMapping("/search")
-	public String search(@Valid @ModelAttribute Form form, BindingResult result, Model model){
+	public String search(@Valid @ModelAttribute Form form, BindingResult result, Model model, HttpSession session){
 		
 		if (result.hasErrors() || (form.getMinPrice() > form.getMaxPrice())){
 
@@ -55,31 +56,42 @@ public class ListingsController {
 			return "landingPage";
 		}
 
+		session.setAttribute("country", form.getCountry());
+		session.setAttribute("pax", form.getPax());
+		session.setAttribute("minPrice", form.getMinPrice());
+		session.setAttribute("maxPrice", form.getMaxPrice());
+
 		List<Listing> listings = listingsService.getSearchResults(form.getCountry(), form.getPax(), form.getMinPrice(), form.getMaxPrice());
 		model.addAttribute("country", form.getCountry());
 		model.addAttribute("listings", listings);
+		
 		
 		return "resultsPage";
 	}
 
 
 	@GetMapping("/listing/{id}")
-	public String listingDetails(@PathVariable String id, Model model){
+	public String listingDetails(@PathVariable String id, Model model, HttpSession session){
 
-		ListingDetails listingDetails = listingsService.getListingDetails(id);
+		Optional<ListingDetails> opt = listingsService.getListingDetails(id);
 
-		model.addAttribute("listingDetails", listingDetails);
+		if (opt.isEmpty()){
+			model.addAttribute("listingId", id);
+			model.addAttribute("country", session.getAttribute("country"));
+			model.addAttribute("pax", session.getAttribute("pax"));
+			model.addAttribute("minPrice", session.getAttribute("minPrice"));
+			model.addAttribute("maxPrice", session.getAttribute("maxPrice"));
+			return "listingNotFound";
+		}
+
+		model.addAttribute("listingDetails", opt.get());
+		model.addAttribute("country", session.getAttribute("country"));
+		model.addAttribute("pax", session.getAttribute("pax"));
+		model.addAttribute("minPrice", session.getAttribute("minPrice"));
+		model.addAttribute("maxPrice", session.getAttribute("maxPrice"));
 
 		return "listingDetails";
 	}
-
-	//TODO: Task 3
-
-
-	//TODO: Task 4
-	
-
-	//TODO: Task 5
 
 
 }

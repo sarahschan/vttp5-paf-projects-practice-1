@@ -54,7 +54,7 @@ public class ListingsRepository {
 	public List<Document> getSearchResults(String country, int pax, double minPrice, double maxPrice) {
 
 		Criteria criteria = Criteria.where("address.country").regex(country, "i")
-									.and("accommodates").is(2)
+									.and("accommodates").is(pax)
 									.and("price").gte(minPrice).lte(maxPrice);
 
 		MatchOperation matchCriteria = Aggregation.match(criteria);
